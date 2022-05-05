@@ -62,28 +62,5 @@ export const Container = styled.div`
       height: 135px;
       resize: none;
     }
-
-    button {
-      height: 48px;
-
-      background-color: var(--brand-primary-0);
-
-      border-radius: 4px;
-      border: none;
-
-      font-family: 'Open Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--white-0);
-      text-transform: uppercase;
-
-      margin-top: 1.5rem;
-
-      transition: 0.2s filter;
-
-      &:hover {
-        filter: brightness(0.9);
-      }
-    }
   }
 `;

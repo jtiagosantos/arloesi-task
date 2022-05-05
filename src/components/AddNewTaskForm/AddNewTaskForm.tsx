@@ -1,5 +1,6 @@
 import closeIcon from '@/assets/icons/close-icon.svg';
 import { Container } from '@/components/AddNewTaskForm/styles';
+import { Button } from '@/components/Button/Button';
 import { useCustomToast } from '@/hooks/useCustomToast';
 import { FC, FormEvent, useId } from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -77,7 +78,12 @@ export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
             onChange={({ target }) => setTaskDescription(target.value)}
           />
 
-          <button type="submit">save</button>
+          <Button
+            type="submit"
+            backgroundColor="var(--brand-primary-0)"
+            textColor="var(--white-0)">
+            save
+          </Button>
         </form>
       </Container>
     </>
