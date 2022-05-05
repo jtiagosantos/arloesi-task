@@ -5,6 +5,7 @@ import { CardList } from '@/components/CardList/CardList';
 import { Header } from '@/components/Header/Header';
 import { InputSearch } from '@/components/InputSearch/InputSearch';
 import { Modal, ModalHandler } from '@/components/Modal/Modal';
+import { RemoveTaskConfirmation } from '@/components/RemoveTaskConfirmation/RemoveTaskConfirmation';
 import { useCustomToast } from '@/hooks/useCustomToast';
 import { Container } from '@/pages/Home/styles';
 import { useRef, useState } from 'react';
@@ -21,6 +22,7 @@ export const Home = () => {
   const [isAddNewTaskModal, setIsAddNewTaskModal] = useState(false);
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
+  const [taskId, setTaskId] = useState<string>('');
   const [tasks, setTasks] = useState<Array<Task>>([]);
   const modalRef = useRef<ModalHandler>(null);
 
@@ -36,12 +38,27 @@ export const Home = () => {
     modalRef.current?.close();
   };
 
+  const handleOpenRemoveTaskModal = (taskId: string) => {
+    modalRef.current?.open();
+    setTaskId(taskId);
+  };
+
+  const handleCloseRemoveTaskModal = () => {
+    modalRef.current?.close();
+  };
+
   const submitTask = (id: string, name: string, description: string) => {
     const newTask = { id, name, description };
 
     setTasks((tasks) => [newTask, ...tasks]);
 
     successToast('Task added successfully.');
+  };
+
+  const removeTask = () => {
+    setTasks(tasks.filter((task) => task.id !== taskId));
+
+    setTaskId('');
   };
 
   return (
@@ -61,6 +78,7 @@ export const Home = () => {
               key={task.id}
               taskName={task.name}
               taskDescription={task.description}
+              onOpenModal={() => handleOpenRemoveTaskModal(task.id)}
             />
           ))}
         </CardList>
@@ -76,7 +94,10 @@ export const Home = () => {
               onCloseModal={handleCloseAddNewTaskModal}
             />
           ) : (
-            <h1>Delete task</h1>
+            <RemoveTaskConfirmation
+              onRemoveTask={removeTask}
+              onCloseModal={handleCloseRemoveTaskModal}
+            />
           )}
         </Modal>
       </Container>
