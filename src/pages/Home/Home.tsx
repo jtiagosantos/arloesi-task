@@ -5,8 +5,11 @@ import { CardList } from '@/components/CardList/CardList';
 import { Header } from '@/components/Header/Header';
 import { InputSearch } from '@/components/InputSearch/InputSearch';
 import { Modal, ModalHandler } from '@/components/Modal/Modal';
+import { useCustomToast } from '@/hooks/useCustomToast';
 import { Container } from '@/pages/Home/styles';
 import { useRef, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Task {
   id: string;
@@ -20,6 +23,8 @@ export const Home = () => {
   const [taskDescription, setTaskDescription] = useState('');
   const [tasks, setTasks] = useState<Array<Task>>([]);
   const modalRef = useRef<ModalHandler>(null);
+
+  const { successToast } = useCustomToast();
 
   const handleOpenAddNewTaskModal = () => {
     setIsAddNewTaskModal(true);
@@ -35,41 +40,46 @@ export const Home = () => {
     const newTask = { id, name, description };
 
     setTasks((tasks) => [newTask, ...tasks]);
+
+    successToast('Task added successfully.');
   };
 
   return (
-    <Container>
-      <Header />
+    <>
+      <ToastContainer />
+      <Container>
+        <Header />
 
-      <section>
-        <InputSearch />
-        <AddTaskButton onClick={handleOpenAddNewTaskModal} />
-      </section>
+        <section>
+          <InputSearch />
+          <AddTaskButton onClick={handleOpenAddNewTaskModal} />
+        </section>
 
-      <CardList>
-        {tasks.map((task) => (
-          <Card
-            key={task.id}
-            taskName={task.name}
-            taskDescription={task.description}
-          />
-        ))}
-      </CardList>
+        <CardList>
+          {tasks.map((task) => (
+            <Card
+              key={task.id}
+              taskName={task.name}
+              taskDescription={task.description}
+            />
+          ))}
+        </CardList>
 
-      <Modal ref={modalRef}>
-        {isAddNewTaskModal ? (
-          <AddNewTaskForm
-            taskName={taskName}
-            setTaskName={setTaskName}
-            taskDescription={taskDescription}
-            setTaskDescription={setTaskDescription}
-            submitTask={submitTask}
-            onCloseModal={handleCloseAddNewTaskModal}
-          />
-        ) : (
-          <h1>Delete task</h1>
-        )}
-      </Modal>
-    </Container>
+        <Modal ref={modalRef}>
+          {isAddNewTaskModal ? (
+            <AddNewTaskForm
+              taskName={taskName}
+              setTaskName={setTaskName}
+              taskDescription={taskDescription}
+              setTaskDescription={setTaskDescription}
+              submitTask={submitTask}
+              onCloseModal={handleCloseAddNewTaskModal}
+            />
+          ) : (
+            <h1>Delete task</h1>
+          )}
+        </Modal>
+      </Container>
+    </>
   );
 };
