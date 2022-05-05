@@ -5,7 +5,7 @@ export const GlobalStyle = createGlobalStyle`
     --brand-primary-0: #ED2F59;
     --brand-secondary-0: #12DB89;
     --black-0: #303030;
-    --black--1: #575757;
+    --black-1: #575757;
     --white-0: #FFFFFF;
     --helpers-placeholder: #909090;
     --background-color: #F6F4F4;
