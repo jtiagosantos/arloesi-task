@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100vw;
-  height: 100vh;
 
   display: flex;
   flex-direction: column;
@@ -11,8 +10,7 @@ export const Container = styled.div`
 
   section {
     width: 100%;
-    max-height: 3rem;
-    height: 100%;
+    height: 3rem;
 
     display: flex;
     justify-content: center;
