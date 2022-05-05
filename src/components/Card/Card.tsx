@@ -1,12 +1,18 @@
 import trashIcon from '@/assets/icons/trash-icon.svg';
 import { Container } from '@/components/Card/styles';
+import { FC } from 'react';
 
-export const Card = () => {
+interface CardProps {
+  taskName: string;
+  taskDescription: string;
+}
+
+export const Card: FC<CardProps> = ({ taskName, taskDescription }) => {
   return (
     <Container>
       <div>
-        <h1>Modular Scale</h1>
-        <p>Lorem ipsum is a simple dummy text</p>
+        <h1>{taskName}</h1>
+        <p>{taskDescription}</p>
       </div>
       <button>
         <img src={trashIcon} alt="Trash icon" />
