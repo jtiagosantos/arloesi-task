@@ -3,15 +3,21 @@ import { FC, ReactNode } from 'react';
 
 interface ButtonProps {
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   backgroundColor: string;
   padding?: string;
   textColor: string;
 }
 
-export const Button: FC<ButtonProps> = ({ children, onClick, ...styles }) => {
+export const Button: FC<ButtonProps> = ({
+  children,
+  onClick,
+  type = 'button',
+  ...styles
+}) => {
   return (
-    <Container onClick={onClick} {...styles}>
+    <Container type={type} onClick={onClick} {...styles}>
       {children}
     </Container>
   );
