@@ -8,6 +8,8 @@ export const Container = styled.div`
   padding: 1.5rem;
   background-color: var(--white-0);
 
+  border-radius: 5px;
+
   h1 {
     font-family: 'Nunito', sans-serif;
     color: var(--black-0);
