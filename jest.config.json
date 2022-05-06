@@ -24,7 +24,7 @@
         }
       }
     ],
-    "^.+\\.svg$": "<rootDir>/src/tests/transforms/svg-transformer.ts"
+    "^.+\\.svg$": "jest-transform-stub"
   },
   "setupFilesAfterEnv": [
     "<rootDir>/src/tests/setup.ts"
