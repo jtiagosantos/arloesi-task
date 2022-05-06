@@ -8,11 +8,12 @@ import { Modal, ModalHandler } from '@/components/Modal/Modal';
 import { RemoveTaskConfirmation } from '@/components/RemoveTaskConfirmation/RemoveTaskConfirmation';
 import { useCustomToast } from '@/hooks/useCustomToast';
 import { Container } from '@/pages/Home/styles';
-import { useRef, useState } from 'react';
+import { filterTasks } from '@/utils/filter-tasks';
+import { useEffect, useRef, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-interface Task {
+export interface Task {
   id: string;
   name: string;
   description: string;
@@ -24,9 +25,17 @@ export const Home = () => {
   const [taskDescription, setTaskDescription] = useState('');
   const [taskId, setTaskId] = useState<string>('');
   const [tasks, setTasks] = useState<Array<Task>>([]);
+  const [filteredTasks, setFilteredTasks] = useState<Array<Task>>([]);
+  const [search, setSearch] = useState('');
   const modalRef = useRef<ModalHandler>(null);
 
   const { successToast } = useCustomToast();
+
+  useEffect(() => {
+    const filteredTasks = filterTasks(search, tasks);
+
+    setFilteredTasks(search ? filteredTasks : tasks);
+  }, [search]);
 
   const handleOpenAddNewTaskModal = () => {
     setIsAddNewTaskModal(true);
@@ -49,16 +58,23 @@ export const Home = () => {
 
   const submitTask = (id: string, name: string, description: string) => {
     const newTask = { id, name, description };
+    const tasks = (tasks: Array<Task>) => [newTask, ...tasks];
 
-    setTasks((tasks) => [newTask, ...tasks]);
+    setTasks(tasks);
+    setFilteredTasks(tasks);
+    setSearch('');
 
     successToast('Task added successfully.');
   };
 
   const removeTask = () => {
-    setTasks(tasks.filter((task) => task.id !== taskId));
+    const tasksNotRemoveds = tasks.filter((task) => task.id !== taskId);
+
+    setTasks(tasksNotRemoveds);
+    setFilteredTasks(tasksNotRemoveds);
 
     setTaskId('');
+    setSearch('');
   };
 
   return (
@@ -68,12 +84,12 @@ export const Home = () => {
         <Header />
 
         <section>
-          <InputSearch />
+          <InputSearch search={search} setSearch={setSearch} />
           <AddTaskButton onClick={handleOpenAddNewTaskModal} />
         </section>
 
         <CardList>
-          {tasks.map((task) => (
+          {filteredTasks.map((task) => (
             <Card
               key={task.id}
               taskName={task.name}
