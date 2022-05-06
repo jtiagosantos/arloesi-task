@@ -77,6 +77,9 @@ export const Home = () => {
 
     setTaskId('');
     setSearch('');
+
+    toast.dismiss();
+    successToast('Task deleted successfully.');
   };
 
   return (
