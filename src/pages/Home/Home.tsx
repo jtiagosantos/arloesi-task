@@ -5,6 +5,7 @@ import { CardList } from '@/components/CardList/CardList';
 import { Header } from '@/components/Header/Header';
 import { InputSearch } from '@/components/InputSearch/InputSearch';
 import { Modal, ModalHandler } from '@/components/Modal/Modal';
+import { NoTask } from '@/components/NoTask/NoTask';
 import { RemoveTaskConfirmation } from '@/components/RemoveTaskConfirmation/RemoveTaskConfirmation';
 import { useCustomToast } from '@/hooks/useCustomToast';
 import { Container } from '@/pages/Home/styles';
@@ -88,16 +89,26 @@ export const Home = () => {
           <AddTaskButton onClick={handleOpenAddNewTaskModal} />
         </section>
 
-        <CardList>
-          {filteredTasks.map((task) => (
-            <Card
-              key={task.id}
-              taskName={task.name}
-              taskDescription={task.description}
-              onOpenModal={() => handleOpenRemoveTaskModal(task.id)}
-            />
-          ))}
-        </CardList>
+        {!!filteredTasks.length && (
+          <CardList>
+            {filteredTasks.map((task) => (
+              <Card
+                key={task.id}
+                taskName={task.name}
+                taskDescription={task.description}
+                onOpenModal={() => handleOpenRemoveTaskModal(task.id)}
+              />
+            ))}
+          </CardList>
+        )}
+
+        {!filteredTasks.length && !search && (
+          <NoTask>There is no created task</NoTask>
+        )}
+
+        {!filteredTasks.length && search && (
+          <NoTask>No results for "{search}"</NoTask>
+        )}
 
         <Modal ref={modalRef}>
           {isAddNewTaskModal ? (
