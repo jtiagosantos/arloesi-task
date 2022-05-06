@@ -54,13 +54,19 @@ export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
     onCloseModal();
   };
 
+  const handleCloseModal = () => {
+    setTaskName('');
+    setTaskDescription('');
+    onCloseModal();
+  };
+
   return (
     <>
       <ToastContainer />
 
       <Container>
         <h1>Add new task</h1>
-        <button onClick={onCloseModal}>
+        <button onClick={handleCloseModal}>
           <img src={closeIcon} alt="Close icon" />
         </button>
 
