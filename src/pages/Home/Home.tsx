@@ -11,7 +11,7 @@ import { useCustomToast } from '@/hooks/useCustomToast';
 import { Container } from '@/pages/Home/styles';
 import { filterTasks } from '@/utils/filter-tasks';
 import { useEffect, useRef, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export interface Task {
@@ -65,6 +65,7 @@ export const Home = () => {
     setFilteredTasks(tasks);
     setSearch('');
 
+    toast.dismiss();
     successToast('Task added successfully.');
   };
 

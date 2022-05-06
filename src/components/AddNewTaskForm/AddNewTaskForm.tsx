@@ -3,7 +3,7 @@ import { Container } from '@/components/AddNewTaskForm/styles';
 import { Button } from '@/components/Button/Button';
 import { useCustomToast } from '@/hooks/useCustomToast';
 import { FC, FormEvent, useId } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface AddNewTaskFormProps {
@@ -33,6 +33,8 @@ export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
+
+    toast.dismiss();
 
     if (!taskName) {
       errorToast('Task name is required.');
