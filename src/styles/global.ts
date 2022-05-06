@@ -18,8 +18,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
 
     @media(max-width: 1000px) {
       font-size: 93.75%;
